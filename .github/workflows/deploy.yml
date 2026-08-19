@@ -29,9 +29,10 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: |
-          cd website/Portfolio-Website-main
-          npm ci
+  run: |
+    cd website/Portfolio-Website-main
+    rm -f package-lock.json
+    npm install
 
       - name: Build website
         run: |
