@@ -23,28 +23,25 @@ jobs:
       - name: Extract website files
         run: |
           unzip Jack-Bhaiya-Video-Editor-Portfolio.zip -d website
-          cd website
-          ls -la
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
-          cache-dependency-path: website/package-lock.json
 
       - name: Install dependencies
         run: |
-          cd website
+          cd website/Portfolio-Website-main
           npm ci
 
       - name: Build website
         run: |
-          cd website
+          cd website/Portfolio-Website-main
           npm run build
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: website/dist
+          path: website/Portfolio-Website-main/dist
 
   deploy:
     needs: build
@@ -55,5 +52,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - id: deployment
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
